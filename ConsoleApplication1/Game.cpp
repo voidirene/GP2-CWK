@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Mesh.h"
+#include "Shading.h"
 
 Game::Game()
 {
@@ -29,7 +31,7 @@ void Game::Exit(std::string text)
 //TODO: maybe this can moved to StartGame() altogether? since its just one line
 void Game::InitializeSystems()
 {
-	gameDisplay->initializeDisplay();
+	gameDisplay->InitializeDisplay();
 }
 
 void Game::GameLoop()
@@ -59,19 +61,13 @@ void Game::ProcessUserInputs()
 //TODO: should this be in the ScreenDisplay class instead?
 void Game::UpdateDisplay()
 {
-	//TODO: these two lines should probably be in their own function in screendisplay
-	glClearDepth(1.0); //sets the clear depth
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clears color and depth buffer //set colour to colour defined in glClearColor
+	gameDisplay->ClearDisplay(); //clear the display
 
-	//TODO: remove this bit
-	// old code for testing only 
-	glEnableClientState(GL_COLOR_ARRAY);
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex2f(0, 0);
-	glVertex2f(0, 500);
-	glVertex2f(500, 500);
-	glEnd();
+	Vertex vertices[] = { Vertex(glm::vec3(-1, -0.5, 0)), Vertex(glm::vec3(0, 0.5, 0)), Vertex(glm::vec3(2, -0.5, 0)) }; //making an array of vertices
+	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
+	Shading shader("..\\res\\shader"); //create a new shader
+	shader.UseShader();
+	mesh.Display();
 
-	gameDisplay->changeBuffer(); //swap the buffers
+	gameDisplay->ChangeBuffer(); //swap the buffers
 }

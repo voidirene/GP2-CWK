@@ -12,12 +12,13 @@ public:
 	ScreenDisplay();
 	~ScreenDisplay();
 
-	void initializeDisplay(); //This function initializes the systems required for a new window screen
-	void changeBuffer(); //This function swaps buffers (since we're using double buffering)
+	void InitializeDisplay(); //This function initializes the systems required for a new window screen
+	void ChangeBuffer(); //This function swaps buffers (since we're using double buffering)
+	void ClearDisplay();
 
 private:
 
-	void checkForErrors(); //This function checks that all systems initialized in initializeDisplay() have initialized correctly
+	void CheckForErrors(); //This function checks that all systems initialized in initializeDisplay() have initialized correctly
 
 	SDL_Window* window; //Variable that holds a pointer to our game window
 	SDL_GLContext sdlglContext; //Variable that holds the SDL GL Context
