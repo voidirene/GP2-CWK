@@ -15,6 +15,9 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ScreenDisplay.h" />
     <ClInclude Include="Shading.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texturing.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -22,6 +25,12 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ScreenDisplay.cpp" />
     <ClCompile Include="Shading.cpp" />
+    <ClCompile Include="stb_image.c" />
+    <ClCompile Include="Texturing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\fragShader.txt" />
+    <Text Include="Shaders\vertShader.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D246FDDF-B30E-4F14-80F8-095FA4E04ECF}</ProjectGuid>
@@ -62,6 +71,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -63,7 +63,7 @@ void Game::UpdateDisplay()
 {
 	gameDisplay->ClearDisplay(); //clear the display
 
-	Vertex vertices[] = { Vertex(glm::vec3(-1, -0.5, 0)), Vertex(glm::vec3(0, 0.5, 0)), Vertex(glm::vec3(2, -0.5, 0)) }; //making an array of vertices
+	Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0),glm::vec2(0.0, 0.0)), Vertex(glm::vec3(0, 0.5, 0),glm::vec2(0.5, 1.0)), Vertex(glm::vec3(0.5, -0.5, 0),glm::vec2(1.0, 0.0)) }; //making an array of vertices
 	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
 	Shading shader("..\\res\\shader"); //create a new shader
 	shader.UseShader();

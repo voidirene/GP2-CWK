@@ -6,14 +6,15 @@ class Vertex
 {
 public:
 
-	Vertex(const glm::vec3& pos)
+	Vertex(const glm::vec3& pos, const glm::vec2& texCoord)
 	{
 		this->position = pos;
+		this->texCoordinates = texCoord;
 	}
 	//TODO: no destructor?
 
-private:
 	glm::vec3 position;
+	glm::vec2 texCoordinates; //position on texture to map to vertex
 };
 
 class Mesh
@@ -31,6 +32,7 @@ private:
 	enum
 	{
 		POSITION_VERTEXBUFFER,
+		TEXCOORD_VB,
 		NUM_BUFFERS
 	};
 
