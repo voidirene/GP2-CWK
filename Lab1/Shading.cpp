@@ -14,13 +14,16 @@ Shading::Shading(const std::string& filename)
 		glAttachShader(program, shaders[i]);
 	}
 
-	glBindAttribLocation(program, 0, "position"); //bind the attribute location
+	glBindAttribLocation(program, 0, "position"); //bind the attribute locations
+	glBindAttribLocation(program, 1, "texCoord");
 	
 	glLinkProgram(program); //create executables that will run on the GPU shaders
 	CheckForErrors(program, GL_LINK_STATUS, true, "Error: Shader program linking failed"); //check if it has linked
 
 	glValidateProgram(program); //check the entire program is valid
 	CheckForErrors(program, GL_VALIDATE_STATUS, true, "Error: Shader program not valid");
+
+	uniforms[TRANSFORM_U] = glGetUniformLocation(program, "transform"); //sets up the uniform with the shader program
 }
 
 Shading::~Shading()
@@ -29,7 +32,8 @@ Shading::~Shading()
 	{
 		glDetachShader(program, shaders[i]); //dettach shaders from program
 		glDeleteShader(shaders[i]); //delete the shaders
-	}	glDeleteProgram(program); //delete the program
+	}
+	glDeleteProgram(program); //delete the program
 }
 
 void Shading::UseShader()
@@ -78,6 +82,12 @@ std::string Shading::LoadShader(const std::string& fileName)
 		std::cerr << "Unable to load shader: " << fileName << std::endl;
 	}
 	return output;
+}
+
+void Shading::UpdateTransform(const Transform& transform)
+{
+	glm::mat4 model = transform.GetModel();
+	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &model[0][0]);
 }
 
 //TODO: check this and change names/optimize?

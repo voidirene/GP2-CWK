@@ -33,6 +33,7 @@ private:
 	{
 		POSITION_VERTEXBUFFER,
 		TEXCOORD_VB,
+
 		NUM_BUFFERS
 	};
 

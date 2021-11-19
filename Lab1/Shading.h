@@ -1,4 +1,5 @@
 #pragma once
+#include "Transform.h"
 #include <GL\glew.h>
 #include <string>
 
@@ -10,6 +11,7 @@ public:
 	~Shading();
 
 	void UseShader();
+	void UpdateTransform(const Transform &transform);
 
 private:
 
@@ -18,7 +20,16 @@ private:
 	void CheckForErrors(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);
 
 	GLuint program; //holds the shader program
+
 	static const unsigned int numberOfShaders = 2; //amount of shaders
 	GLuint shaders[numberOfShaders]; //array of shaders
+
+	enum
+	{
+		TRANSFORM_U,
+
+		NUM_UNIFORMS
+	};
+	GLuint uniforms[NUM_UNIFORMS];
 };
 

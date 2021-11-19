@@ -1,11 +1,14 @@
 #include "Game.h"
 #include "Mesh.h"
 #include "Shading.h"
+#include "Texturing.h"
 
 Game::Game()
 {
 	gameState = GameState::PLAYING;
 	gameDisplay = new ScreenDisplay();
+
+	counter = 0;
 }
 Game::~Game()
 {
@@ -66,8 +69,21 @@ void Game::UpdateDisplay()
 	Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0),glm::vec2(0.0, 0.0)), Vertex(glm::vec3(0, 0.5, 0),glm::vec2(0.5, 1.0)), Vertex(glm::vec3(0.5, -0.5, 0),glm::vec2(1.0, 0.0)) }; //making an array of vertices
 	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
 	Shading shader("..\\res\\shader"); //create a new shader
+	Texturing texture("..\\res\\bricks.jpg"); //load a texture
+	Transform transform;
+	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
+	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
+	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
+
 	shader.UseShader();
+	shader.UpdateTransform(transform);
+	texture.UseTexture(0);
 	mesh.Display();
+
+	counter = counter + 0.01f;
+
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnd();
 
 	gameDisplay->ChangeBuffer(); //swap the buffers
 }

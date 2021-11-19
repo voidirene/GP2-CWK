@@ -9,15 +9,16 @@ Mesh::Mesh(Vertex* vertex, unsigned int numberOfVertices)
 	glBindVertexArray(vao); //binds it so we can use it
 
 	std::vector<glm::vec3> positions; //holds the position data
-	std::vector<glm::vec2> textCoords; //holds the texture coordinates data
+	std::vector<glm::vec2> texCoords; //holds the texture coordinates data
 	//reserve all the space needed to hold our data
 	positions.reserve(numberOfVertices);
-	textCoords.reserve(numberOfVertices);
+	texCoords.reserve(numberOfVertices);
 
-	for (int i = 0; i < numberOfVertices; i++) //for loop for running the number of vertices and storing data in the lists
+	//TODO: changed int i to size_t i to avoid an error. is this the best solution? look into this
+	for (size_t i = 0; i < numberOfVertices; i++) //for loop for running the number of vertices and storing data in the lists
 	{
 		positions.push_back(vertex[i].position);
-		textCoords.push_back(vertex[i].texCoordinates);
+		texCoords.push_back(vertex[i].texCoordinates);
 	}
 
 	glGenBuffers(NUM_BUFFERS, vaBuffers); //generate buffers based on the array of data/buffers (vaBuffers) - GLuint vertexArrayBuffers[NUM_BUFFERS];
@@ -28,7 +29,7 @@ Mesh::Mesh(Vertex* vertex, unsigned int numberOfVertices)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); //specify to openGL how to read the above array/s - which array are we working with (0 - from above), how many pieces of data there are (3 - vertex), type of data, whether to normalize or not, how much data we need to skip, and how far from the beginning to find the first attribute
 
 	glBindBuffer(GL_ARRAY_BUFFER, vaBuffers[TEXCOORD_VB]); //tell openGL what type of data the buffer is(GL_ARRAY_BUFFER), and pass the data
-	glBufferData(GL_ARRAY_BUFFER, numberOfVertices * sizeof(textCoords[0]), &textCoords[0], GL_STATIC_DRAW); //move the data to the GPU - type of data, size of data, starting address (pointer)of data, where do we store the data on the GPU
+	glBufferData(GL_ARRAY_BUFFER, numberOfVertices * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW); //move the data to the GPU - type of data, size of data, starting address (pointer)of data, where do we store the data on the GPU
 	
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
