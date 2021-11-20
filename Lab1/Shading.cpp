@@ -84,10 +84,10 @@ std::string Shading::LoadShader(const std::string& fileName)
 	return output;
 }
 
-void Shading::UpdateTransform(const Transform& transform)
+void Shading::UpdateTransform(const Transform& transform, const Camera& camera)
 {
-	glm::mat4 model = transform.GetModel();
-	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &model[0][0]);
+	glm::mat4 mvp = camera.GetViewProjection() * transform.GetModel();
+	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &mvp[0][0]);
 }
 
 //TODO: check this and change names/optimize?

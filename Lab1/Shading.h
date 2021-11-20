@@ -11,7 +11,7 @@ public:
 	~Shading();
 
 	void UseShader();
-	void UpdateTransform(const Transform &transform);
+	void UpdateTransform(const Transform& transform, const Camera& camera);
 
 private:
 

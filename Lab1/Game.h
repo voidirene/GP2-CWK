@@ -1,10 +1,15 @@
 #pragma once
 #include <SDL\SDL.h>
 #include <GL\glew.h>
+//#include "Camera.h"
 #include "ScreenDisplay.h"
+#include "Mesh.h"
+#include "Shading.h"
+#include "Texturing.h"
+#include "Transform.h"
 #include <string>
 #include <iostream>
-using std::cout;
+using std::cout; //TODO: maybe remove Exit() as well as these?
 
 enum class GameState { PLAYING, QUITTING };
 
@@ -20,12 +25,16 @@ public:
 private:
 
 	void InitializeSystems(); //This function initializes the game's systems
-	void GameLoop(); //This function runs the game loop; no game loop means the game ends
 	void ProcessUserInputs(); //This function takes in and processes the user's inputs
+	void GameLoop(); //This function runs the game loop; no game loop means the game ends
 	void UpdateDisplay(); //This function updates the game's display
 
 	GameState gameState; //Variable holding a reference to the current game state
-	ScreenDisplay* gameDisplay; //Variable holding a pointer to the game's screen display
+	ScreenDisplay gameDisplay; //Variable holding a pointer to the game's screen display
+
+	Mesh mesh1;
+	Mesh mesh2;
+	Camera camera;
 
 	float counter;
 };

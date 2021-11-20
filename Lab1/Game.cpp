@@ -3,13 +3,21 @@
 #include "Shading.h"
 #include "Texturing.h"
 
+unsigned int indices[] = { 0, 1, 2 };
+Transform transform;
+
+//for displaying triangles
+//Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0),glm::vec2(0.0, 0.0)), Vertex(glm::vec3(0, 0.5, 0),glm::vec2(0.5, 1.0)), Vertex(glm::vec3(0.5, -0.5, 0),glm::vec2(1.0, 0.0)) }; //making an array of vertices
+//Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
+
 Game::Game()
 {
-	gameState = GameState::PLAYING;
-	gameDisplay = new ScreenDisplay();
+	gameState = GameState::PLAYING; //set the game state to PLAYING
+	ScreenDisplay* gameDisplay = new ScreenDisplay(); //create a new display
 
 	counter = 0;
 }
+
 Game::~Game()
 {
 
@@ -31,10 +39,15 @@ void Game::Exit(std::string text)
 	SDL_Quit();
 }
 
-//TODO: maybe this can moved to StartGame() altogether? since its just one line
 void Game::InitializeSystems()
 {
-	gameDisplay->InitializeDisplay();
+	gameDisplay.InitializeDisplay(); //initializes the game display
+
+	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
+	Shading shader("..\\res\\shader"); //create a new shader
+	Texturing texture("..\\res\\bricks.jpg"); //load a texture
+
+	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay.GetWidth() / gameDisplay.GetHeight(), 0.01f, 1000.0f); //initializes the camera
 }
 
 void Game::GameLoop()
@@ -64,26 +77,24 @@ void Game::ProcessUserInputs()
 //TODO: should this be in the ScreenDisplay class instead?
 void Game::UpdateDisplay()
 {
-	gameDisplay->ClearDisplay(); //clear the display
+	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
-	Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0),glm::vec2(0.0, 0.0)), Vertex(glm::vec3(0, 0.5, 0),glm::vec2(0.5, 1.0)), Vertex(glm::vec3(0.5, -0.5, 0),glm::vec2(1.0, 0.0)) }; //making an array of vertices
-	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
 	Shading shader("..\\res\\shader"); //create a new shader
 	Texturing texture("..\\res\\bricks.jpg"); //load a texture
-	Transform transform;
+
 	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
 	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
 
 	shader.UseShader();
-	shader.UpdateTransform(transform);
+	shader.UpdateTransform(transform, camera);
 	texture.UseTexture(0);
-	mesh.Display();
+	mesh1.Display();
 
 	counter = counter + 0.01f;
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
 
-	gameDisplay->ChangeBuffer(); //swap the buffers
+	gameDisplay.ChangeBuffer(); //swap the buffers
 }

@@ -3,8 +3,8 @@
 ScreenDisplay::ScreenDisplay()
 {
 	window = nullptr;
-	displayWidth = 1600;
-	displayHeight = 900;
+	displayWidth = 1600.0f;
+	displayHeight = 900.0f;
 }
 
 ScreenDisplay::~ScreenDisplay()
@@ -24,10 +24,12 @@ void ScreenDisplay::InitializeDisplay()
 	//SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); //set up double buffer
 
-	window = SDL_CreateWindow("GP2 Coursework Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, displayWidth, displayHeight, SDL_WINDOW_OPENGL); //create game window
+	window = SDL_CreateWindow("GP2 Coursework Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, (int) displayWidth, (int) displayHeight, SDL_WINDOW_OPENGL); //create game window
 
 	sdlglContext = SDL_GL_CreateContext(window); //create a new SDL GL context to use with our OpenGL window
 	glew = glewInit(); //initialize glew
+	glEnable(GL_DEPTH_TEST); //enables z-buffering 
+	glEnable(GL_CULL_FACE); //does not allow faces that are not pointing to the camera to be displayed
 
 	CheckForErrors(); //check that everything has been initialized properly, else return an error message
 
@@ -39,9 +41,9 @@ void ScreenDisplay::ChangeBuffer()
 	SDL_GL_SwapWindow(window);
 }
 
-void ScreenDisplay::ClearDisplay()
+void ScreenDisplay::ClearDisplay(float r, float g, float b, float a)
 {
-	glClearDepth(1.0); //sets the clear depth
+	glClearColor(r, g, b, a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clears color and depth buffer //set colour to colour defined in glClearColor
 }
 
@@ -70,4 +72,14 @@ void ScreenDisplay::CheckForErrors()
 		std::cin >> in;
 		SDL_Quit();
 	}
+}
+
+float ScreenDisplay::GetWidth()
+{
+	return displayWidth;
+}
+
+float ScreenDisplay::GetHeight()
+{
+	return displayHeight;
 }

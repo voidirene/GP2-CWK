@@ -14,7 +14,10 @@ public:
 
 	void InitializeDisplay(); //This function initializes the systems required for a new window screen
 	void ChangeBuffer(); //This function swaps buffers (since we're using double buffering)
-	void ClearDisplay();
+	void ClearDisplay(float r, float g, float b, float a);
+
+	float GetWidth();
+	float GetHeight();
 
 private:
 
@@ -24,7 +27,7 @@ private:
 	SDL_GLContext sdlglContext; //Variable that holds the SDL GL Context
 	GLenum glew;
 
-	int displayWidth; //the game window's width
-	int displayHeight; //the game window's height
+	float displayWidth; //the game window's width
+	float displayHeight; //the game window's height
 };
 
