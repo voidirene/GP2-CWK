@@ -103,6 +103,6 @@ void Mesh::InitializeModel(const IndexedModel& model) //TODO: redo comments
 void Mesh::Display()
 {
 	glBindVertexArray(vao); //bind the vertex array
-	glDrawArrays(GL_TRIANGLES, 0, displayCount); //display; mode, starting position, where we want to stop
+	glDrawElements(GL_TRIANGLES, displayCount, GL_UNSIGNED_INT, 0); //display; mode, number of objects, type, const void *indices
 	glBindVertexArray(0); //unbind
 }

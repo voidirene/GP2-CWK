@@ -3,7 +3,17 @@
 #include <cassert>
 #include <iostream>
 
-Texturing::Texturing(const std::string& file)
+Texturing::Texturing()
+{
+
+}
+
+Texturing::~Texturing()
+{
+	glDeleteTextures(1, &textureHandler); //number of and address of textures
+}
+
+void Texturing::InitializeTexture(const std::string& file)
 {
 	int width;
 	int height;
@@ -33,11 +43,6 @@ Texturing::Texturing(const std::string& file)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData); //Target, Mipmapping Level, Pixel Format, Width, Height, Border Size, Input Format, Data Type of Texture, Texture Data
 
 	stbi_image_free(textureData); //delete the data from CPU
-}
-
-Texturing::~Texturing()
-{
-	glDeleteTextures(1, &textureHandler); //number of and address of textures
 }
 
 void Texturing::UseTexture(unsigned int number)

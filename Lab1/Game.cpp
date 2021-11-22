@@ -44,8 +44,8 @@ void Game::InitializeSystems()
 	gameDisplay.InitializeDisplay(); //initializes the game display
 
 	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
-	Shading shader("..\\res\\shader"); //create a new shader
-	Texturing texture("..\\res\\bricks.jpg"); //load a texture
+	shader.InitializeShader("..\\res\\shader"); //create a new shader
+	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
 
 	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay.GetWidth() / gameDisplay.GetHeight(), 0.01f, 1000.0f); //initializes the camera
 }
@@ -79,11 +79,8 @@ void Game::UpdateDisplay()
 {
 	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
-	Shading shader("..\\res\\shader"); //create a new shader
-	Texturing texture("..\\res\\bricks.jpg"); //load a texture
-
 	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, 0.0, counter * 5));
+	transform.SetRot(glm::vec3(0.0, 180.0, counter * 5));
 	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
 
 	shader.UseShader();

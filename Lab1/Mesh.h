@@ -38,6 +38,7 @@ public:
 
 	void Display();
 	void LoadModel(const std::string& file); //for loading a model
+	unsigned int displayCount; //how many VAOs we want to display
 
 private:
 
@@ -56,6 +57,5 @@ private:
 
 	GLuint vao;
 	GLuint vaBuffers[NUM_BUFFERS]; //creates an array of buffers
-	unsigned int displayCount; //how many VAOs we want to display
 };
 

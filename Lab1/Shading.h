@@ -7,9 +7,10 @@ class Shading
 {
 public:
 
-	Shading(const std::string& filename);
+	Shading();
 	~Shading();
 
+	void InitializeShader(const std::string& file);
 	void UseShader();
 	void UpdateTransform(const Transform& transform, const Camera& camera);
 

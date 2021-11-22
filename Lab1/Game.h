@@ -33,8 +33,10 @@ private:
 	ScreenDisplay gameDisplay; //Variable holding a pointer to the game's screen display
 
 	Mesh mesh1;
-	Mesh mesh2;
 	Camera camera;
+
+	Texturing texture;
+	Shading shader;
 
 	float counter;
 };

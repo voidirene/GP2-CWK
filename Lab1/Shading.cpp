@@ -2,28 +2,9 @@
 #include <fstream>
 #include <iostream>
 
-Shading::Shading(const std::string& filename)
+Shading::Shading()
 {
-	program = glCreateProgram(); //create the program
 
-	shaders[0] = CreateShader(LoadShader("..\\res\\shader.vert"), GL_VERTEX_SHADER); //create the shaders from file
-	shaders[1] = CreateShader(LoadShader("..\\res\\shader.frag"), GL_FRAGMENT_SHADER);
-	
-	for (int i = 0; i < numberOfShaders; i++) //for loop for attaching shaders to the program
-	{
-		glAttachShader(program, shaders[i]);
-	}
-
-	glBindAttribLocation(program, 0, "position"); //bind the attribute locations
-	glBindAttribLocation(program, 1, "texCoord");
-	
-	glLinkProgram(program); //create executables that will run on the GPU shaders
-	CheckForErrors(program, GL_LINK_STATUS, true, "Error: Shader program linking failed"); //check if it has linked
-
-	glValidateProgram(program); //check the entire program is valid
-	CheckForErrors(program, GL_VALIDATE_STATUS, true, "Error: Shader program not valid");
-
-	uniforms[TRANSFORM_U] = glGetUniformLocation(program, "transform"); //sets up the uniform with the shader program
 }
 
 Shading::~Shading()
@@ -34,6 +15,30 @@ Shading::~Shading()
 		glDeleteShader(shaders[i]); //delete the shaders
 	}
 	glDeleteProgram(program); //delete the program
+}
+
+void Shading::InitializeShader(const std::string& file)
+{
+	program = glCreateProgram(); //create the program
+
+	shaders[0] = CreateShader(LoadShader("..\\res\\shader.vert"), GL_VERTEX_SHADER); //create the shaders from file
+	shaders[1] = CreateShader(LoadShader("..\\res\\shader.frag"), GL_FRAGMENT_SHADER);
+
+	for (int i = 0; i < numberOfShaders; i++) //for loop for attaching shaders to the program
+	{
+		glAttachShader(program, shaders[i]);
+	}
+
+	glBindAttribLocation(program, 0, "position"); //bind the attribute locations
+	glBindAttribLocation(program, 1, "texCoord");
+
+	glLinkProgram(program); //create executables that will run on the GPU shaders
+	CheckForErrors(program, GL_LINK_STATUS, true, "Error: Shader program linking failed"); //check if it has linked
+
+	glValidateProgram(program); //check the entire program is valid
+	CheckForErrors(program, GL_VALIDATE_STATUS, true, "Error: Shader program not valid");
+
+	uniforms[TRANSFORM_U] = glGetUniformLocation(program, "transform"); //sets up the uniform with the shader program
 }
 
 void Shading::UseShader()
