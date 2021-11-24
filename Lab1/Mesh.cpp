@@ -106,3 +106,8 @@ void Mesh::Display()
 	glDrawElements(GL_TRIANGLES, displayCount, GL_UNSIGNED_INT, 0); //display; mode, number of objects, type, const void *indices
 	glBindVertexArray(0); //unbind
 }
+
+void Mesh::UpdateSphereData(glm::vec3 position, float radius)
+{
+	boundingSphere.UpdateSphereData(position, radius);
+}

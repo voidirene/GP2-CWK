@@ -26,6 +26,30 @@ private:
 	glm::vec3 normal;
 };
 
+//TODO: make a new script for this?
+struct BoundingSphere //for collision detection
+{
+public:
+
+	BoundingSphere()
+	{
+
+	}
+
+	void UpdateSphereData(glm::vec3 position, float radius) //TODO: overloads?
+	{
+		this->position = position;
+		this->radius = radius;
+	}
+
+private:
+
+	glm::vec3 GetPosition() { return position; }
+	float GetRadius() { return radius; }
+
+	float radius;
+	glm::vec3 position;
+};
 
 class Mesh
 {
@@ -38,6 +62,9 @@ public:
 
 	void Display();
 	void LoadModel(const std::string& file); //for loading a model
+
+	void UpdateSphereData(glm::vec3 position, float radius);
+
 	unsigned int displayCount; //how many VAOs we want to display
 
 private:
@@ -57,5 +84,7 @@ private:
 
 	GLuint vao;
 	GLuint vaBuffers[NUM_BUFFERS]; //creates an array of buffers
+
+	BoundingSphere boundingSphere;
 };
 

@@ -44,6 +44,7 @@ void Game::InitializeSystems()
 	gameDisplay.InitializeDisplay(); //initializes the game display
 
 	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
+	mesh2.LoadModel("..\\res\\monkey3.obj");
 	shader.InitializeShader("..\\res\\shader"); //create a new shader
 	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
 
@@ -56,6 +57,8 @@ void Game::GameLoop()
 	{
 		ProcessUserInputs();
 		UpdateDisplay();
+
+		DetectCollision(); //TODO:
 	}
 }
 
@@ -79,14 +82,19 @@ void Game::UpdateDisplay()
 {
 	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
-	transform.SetPos(glm::vec3(sinf(counter), 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, 180.0, counter * 5));
-	transform.SetScale(glm::vec3(sinf(counter), sinf(counter), sinf(counter)));
+	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
+	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
+	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 
 	shader.UseShader();
 	shader.UpdateTransform(transform, camera);
 	texture.UseTexture(0);
+
 	mesh1.Display();
+	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
+
+	mesh2.Display();
+	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
 
 	counter = counter + 0.01f;
 
@@ -94,4 +102,20 @@ void Game::UpdateDisplay()
 	glEnd();
 
 	gameDisplay.ChangeBuffer(); //swap the buffers
+}
+
+//TODO: rename
+bool Game::DetectCollision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad)
+{
+	float distance = glm::sqrt((m2Pos.x - m1Pos.x) * (m2Pos.x - m1Pos.x) + (m2Pos.y - m1Pos.y) * (m2Pos.y - m1Pos.y) + (m2Pos.z - m1Pos.z) * (m2Pos.z - m1Pos.z)); //pythagoras
+
+	if (distance < (m1Rad + m2Rad)) //TODO: check what happens if you remove the sqrt and multiply this distance by itself
+	{
+		cout << distance << '\n';
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
