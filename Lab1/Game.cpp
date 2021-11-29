@@ -58,7 +58,7 @@ void Game::GameLoop()
 		ProcessUserInputs();
 		UpdateDisplay();
 
-		DetectCollision(); //TODO:
+		DetectCollision(mesh1.boundingSphere.GetPosition(), mesh1.boundingSphere.GetRadius(), mesh2.boundingSphere.GetPosition(), mesh2.boundingSphere.GetRadius());
 	}
 }
 
@@ -77,13 +77,13 @@ void Game::ProcessUserInputs()
 	}
 }
 
-//TODO: should this be in the ScreenDisplay class instead?
+//TODO: should this be in the ScreenDisplay class instead? setting the transform and such shouldn't be in in UpdateDisplay
 void Game::UpdateDisplay()
 {
 	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
 	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
+	transform.SetRot(glm::vec3(0.0, counter * 1, 0.0));
 	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 
 	shader.UseShader();
@@ -92,6 +92,14 @@ void Game::UpdateDisplay()
 
 	mesh1.Display();
 	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
+
+	transform.SetPos(glm::vec3(1.0, 0.0, 0.0));
+	transform.SetRot(glm::vec3(0.0, counter * -1, 0.0));
+	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
+
+	shader.UseShader();
+	shader.UpdateTransform(transform, camera);
+	texture.UseTexture(0);
 
 	mesh2.Display();
 	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
@@ -102,6 +110,12 @@ void Game::UpdateDisplay()
 	glEnd();
 
 	gameDisplay.ChangeBuffer(); //swap the buffers
+
+	/*ideally this should look like
+		clear display
+		draw object1
+		draw object2
+		swap buffer*/
 }
 
 //TODO: rename

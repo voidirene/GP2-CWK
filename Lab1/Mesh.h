@@ -42,10 +42,10 @@ public:
 		this->radius = radius;
 	}
 
-private:
-
 	glm::vec3 GetPosition() { return position; }
 	float GetRadius() { return radius; }
+
+private:
 
 	float radius;
 	glm::vec3 position;
@@ -67,6 +67,9 @@ public:
 
 	unsigned int displayCount; //how many VAOs we want to display
 
+	//TODO: make a getter for the position + radius?
+	BoundingSphere boundingSphere; //TODO: add more colliders (ex. for the ears, chin, etc)
+
 private:
 
 	void InitializeMesh(Vertex* vertices, unsigned int numberOfVertices, unsigned int* indices, unsigned int numberOfIndices);
@@ -84,7 +87,5 @@ private:
 
 	GLuint vao;
 	GLuint vaBuffers[NUM_BUFFERS]; //creates an array of buffers
-
-	BoundingSphere boundingSphere;
 };
 
