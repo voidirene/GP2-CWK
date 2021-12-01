@@ -49,12 +49,17 @@ void Game::InitializeSystems()
 	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
 
 	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay.GetWidth() / gameDisplay.GetHeight(), 0.01f, 1000.0f); //initializes the camera
+
+	audio.AddNewSound("..\\res\\bang.wav");
+	audio.AddNewBackgroundMusic("..\\res\\background.wav");
 }
 
 void Game::GameLoop()
 {
 	while (gameState == GameState::PLAYING)
 	{
+		audio.PlayBackgroundMusic();
+		audio.PlaySound(0);
 		ProcessUserInputs();
 		UpdateDisplay();
 

@@ -3,6 +3,7 @@
 #include <GL\glew.h>
 //#include "Camera.h"
 #include "ScreenDisplay.h"
+#include "Audio.h"
 #include "Mesh.h"
 #include "Shading.h"
 #include "Texturing.h"
@@ -40,6 +41,7 @@ private:
 
 	Texturing texture;
 	Shading shader;
+	Audio audio;
 
 	float counter;
 };
