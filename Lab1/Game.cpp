@@ -45,7 +45,7 @@ void Game::InitializeSystems()
 
 	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
 	mesh2.LoadModel("..\\res\\teapot.obj");
-	mesh3.LoadModel("..\\res\\bunny.obj");
+	mesh3.LoadModel("..\\res\\capsule.obj");
 	shader.InitializeShader("..\\res\\shader"); //create a new shader
 	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
 	texture.InitializeTexture("..\\res\\water.jpg"); //load a texture
@@ -89,6 +89,7 @@ void Game::UpdateDisplay()
 {
 	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
+	//MESH1
 	transform.SetPos(glm::vec3(-1.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(counter * 1, 0.0, 0.0));
 	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
@@ -100,9 +101,10 @@ void Game::UpdateDisplay()
 	mesh1.Display();
 	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
 
+	//MESH2
 	transform.SetPos(glm::vec3(0.0, sinf(counter) * 3, 0.0));
 	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
-	transform.SetScale(glm::vec3(0.15, 0.15, 1.0));
+	transform.SetScale(glm::vec3(0.1, 0.1, 0.1));
 
 	shader.UpdateTransform(transform, camera);
 	texture.UseTexture(1);
@@ -110,9 +112,10 @@ void Game::UpdateDisplay()
 	mesh2.Display();
 	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
 
-	transform.SetPos(glm::vec3(1.0, -1.0, 0.0));
+	//MESH3
+	transform.SetPos(glm::vec3(3.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, counter * 1, 0.0));
-	transform.SetScale(glm::vec3(10.0, 10.0, 10.0));
+	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 
 	shader.UpdateTransform(transform, camera);
 	texture.UseTexture(2);
