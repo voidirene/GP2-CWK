@@ -44,9 +44,12 @@ void Game::InitializeSystems()
 	gameDisplay.InitializeDisplay(); //initializes the game display
 
 	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
-	mesh2.LoadModel("..\\res\\monkey3.obj");
+	mesh2.LoadModel("..\\res\\teapot.obj");
+	mesh3.LoadModel("..\\res\\bunny.obj");
 	shader.InitializeShader("..\\res\\shader"); //create a new shader
 	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
+	texture.InitializeTexture("..\\res\\water.jpg"); //load a texture
+	texture.InitializeTexture("..\\res\\grass.jpg"); //load a texture
 
 	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay.GetWidth() / gameDisplay.GetHeight(), 0.01f, 1000.0f); //initializes the camera
 
@@ -59,7 +62,6 @@ void Game::GameLoop()
 	while (gameState == GameState::PLAYING)
 	{
 		audio.PlayBackgroundMusic();
-		audio.PlaySound(0);
 		ProcessUserInputs();
 		UpdateDisplay();
 
@@ -87,8 +89,8 @@ void Game::UpdateDisplay()
 {
 	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
-	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, counter * 1, 0.0));
+	transform.SetPos(glm::vec3(-1.0, 0.0, 0.0));
+	transform.SetRot(glm::vec3(counter * 1, 0.0, 0.0));
 	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 
 	shader.UseShader();
@@ -98,16 +100,25 @@ void Game::UpdateDisplay()
 	mesh1.Display();
 	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
 
-	transform.SetPos(glm::vec3(1.0, 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, counter * -1, 0.0));
-	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
+	transform.SetPos(glm::vec3(0.0, sinf(counter) * 3, 0.0));
+	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+	transform.SetScale(glm::vec3(0.15, 0.15, 1.0));
 
-	shader.UseShader();
 	shader.UpdateTransform(transform, camera);
-	texture.UseTexture(0);
+	texture.UseTexture(1);
 
 	mesh2.Display();
 	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
+
+	transform.SetPos(glm::vec3(1.0, -1.0, 0.0));
+	transform.SetRot(glm::vec3(0.0, counter * 1, 0.0));
+	transform.SetScale(glm::vec3(10.0, 10.0, 10.0));
+
+	shader.UpdateTransform(transform, camera);
+	texture.UseTexture(2);
+
+	mesh3.Display();
+	mesh3.UpdateSphereData(*transform.GetPos(), 0.62f);
 
 	counter = counter + 0.01f;
 
@@ -130,11 +141,13 @@ bool Game::DetectCollision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float 
 
 	if (distance < (m1Rad + m2Rad)) //TODO: check what happens if you remove the sqrt and multiply this distance by itself
 	{
-		cout << distance << '\n';
+		cout << "collision! : " << distance << '\n';
+		audio.PlaySound(0);
 		return true;
 	}
 	else
 	{
+		cout << "NO collision! : " << distance << '\n';
 		return false;
 	}
 }

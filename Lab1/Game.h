@@ -37,6 +37,7 @@ private:
 
 	Mesh mesh1;
 	Mesh mesh2;
+	Mesh mesh3;
 	Camera camera;
 
 	Texturing texture;

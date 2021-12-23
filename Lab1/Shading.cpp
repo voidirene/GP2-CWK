@@ -11,7 +11,7 @@ Shading::~Shading()
 {
 	for (int i = 0; i < numberOfShaders; i++) 
 	{
-		glDetachShader(program, shaders[i]); //dettach shaders from program
+		glDetachShader(program, shaders[i]); //detach shaders from program
 		glDeleteShader(shaders[i]); //delete the shaders
 	}
 	glDeleteProgram(program); //delete the program

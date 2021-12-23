@@ -47,6 +47,12 @@ Mesh::~Mesh()
 	glDeleteVertexArrays(1, &vao); //delete the vertex array
 }
 
+void Mesh::LoadModel(const std::string& file)
+{
+	IndexedModel model = OBJModel(file).ToIndexedModel(); //loads a model from file
+	InitializeModel(model); //initialize the model
+}
+
 void Mesh::InitializeMesh(Vertex* vertices, unsigned int numberOfVertices, unsigned int* indices, unsigned int numberOfIndices) //TODO: redo comments
 {
 	IndexedModel model;
@@ -62,12 +68,6 @@ void Mesh::InitializeMesh(Vertex* vertices, unsigned int numberOfVertices, unsig
 		model.indices.push_back(indices[i]);
 
 	InitializeModel(model);
-}
-
-void Mesh::LoadModel(const std::string& file)
-{
-	IndexedModel model = OBJModel(file).ToIndexedModel(); //loads a model from file
-	InitializeModel(model); //initialize the model
 }
 
 void Mesh::InitializeModel(const IndexedModel& model) //TODO: redo comments
