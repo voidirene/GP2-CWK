@@ -50,7 +50,7 @@ void Texturing::InitializeTexture(const std::string& file)
 	amountOfTextures += 1;
 }
 
-void Texturing::InitializeAllTextures()
+void Texturing::InitializeAllTextures() //TODO: fix InitializeTexture()
 {
 	int width;
 	int height;
@@ -145,7 +145,7 @@ void Texturing::UseTexture(unsigned int number)
 	glBindTexture(GL_TEXTURE_2D, textureHandler[number]); //type of and texture to bind to unit
 }
 
-void Texturing::UseSpecificTexture(unsigned int number)
+void Texturing::UseSpecificTexture(unsigned int number) //TODO: fix UseTexture()
 {
 	if (number == 0)
 	{

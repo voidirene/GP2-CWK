@@ -74,14 +74,74 @@ void Game::ProcessUserInputs()
 {
 	SDL_Event event;
 
+	bool cameraMoveUp = false;
+	bool cameraMoveDown = false;
+	bool cameraMoveLeft = false;
+	bool cameraMoveRight = false;
+
 	while (SDL_PollEvent(&event)) //get and process events
 	{
-		switch (event.type) //TODO: add more event types, such as for moving camera (or maybe even moving the objects on the screen?)
+		switch (event.type)
 		{
-		case SDL_QUIT:
-			gameState = GameState::QUITTING;
-			break;
+			case SDL_QUIT: //quitting the game
+				gameState = GameState::QUITTING;
+				break;
+			case SDL_KEYDOWN: //keyboard button pressed
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_UP:
+					cameraMoveUp = true;
+					break;
+				case SDLK_DOWN:
+					cameraMoveDown = true;
+					break;
+				case SDLK_LEFT:
+					cameraMoveLeft = true;
+					break;
+				case SDLK_RIGHT:
+					cameraMoveRight = true;
+					break;
+				}
+				break;
+			}
+			case SDL_KEYUP: //keyboard button released
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_UP:
+					cameraMoveUp = false;
+					break;
+				case SDLK_DOWN:
+					cameraMoveDown = false;
+					break;
+				case SDLK_LEFT:
+					cameraMoveLeft = false;
+					break;
+				case SDLK_RIGHT:
+					cameraMoveRight = false;
+					break;
+				}
+				break;
+			}
 		}
+	}
+
+	if (cameraMoveUp)
+	{
+		camera.MoveCameraVertically(1);
+	}
+	if (cameraMoveDown)
+	{
+		camera.MoveCameraVertically(-1);
+	}
+	if (cameraMoveLeft)
+	{
+		camera.MoveCameraHorizontally(1);
+	}
+	if (cameraMoveRight)
+	{
+		camera.MoveCameraHorizontally(-1);
 	}
 }
 

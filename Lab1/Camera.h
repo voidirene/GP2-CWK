@@ -25,6 +25,16 @@ public:
 		return projectionMatrix * glm::lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
 	}
 
+	void MoveCameraHorizontally(int direction)
+	{
+		cameraPosition.x += 1 * direction;
+	}
+
+	void MoveCameraVertically(int direction)
+	{
+		cameraPosition.y += 1 * direction;
+	}
+
 private:
 
 	glm::vec3 cameraPosition;
