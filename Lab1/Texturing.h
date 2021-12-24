@@ -13,8 +13,16 @@ public:
 	//TODO: functionality for using more than 32?
 	void UseTexture(unsigned int number); //uses up to 32 textures
 
+
+	void InitializeAllTextures();
+	void UseSpecificTexture(unsigned int number);
+
 private:
 
-	GLuint textureHandler;
+	GLuint textureHandler[3];
+	GLuint texA;
+	GLuint texB;
+	GLuint texC;
+	unsigned int amountOfTextures;
 };
 
