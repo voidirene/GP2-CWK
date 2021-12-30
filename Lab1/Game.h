@@ -1,15 +1,14 @@
 #pragma once
 #include <SDL\SDL.h>
 #include <GL\glew.h>
-//#include "Camera.h"
 #include "ScreenDisplay.h"
 #include "Audio.h"
 #include "Mesh.h"
 #include "Shading.h"
 #include "Texturing.h"
-#include "Transform.h"
 #include <string>
 #include <iostream>
+
 using std::cout; //TODO: maybe remove Exit() as well as these?
 
 enum class GameState { PLAYING, QUITTING };
@@ -33,7 +32,7 @@ private:
 	bool DetectCollision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
 
 	GameState gameState; //Variable holding a reference to the current game state
-	ScreenDisplay gameDisplay; //Variable holding a pointer to the game's screen display
+	ScreenDisplay* gameDisplay; //Variable holding a pointer to the game's screen display
 
 	Mesh mesh1;
 	Mesh mesh2;
@@ -44,6 +43,7 @@ private:
 	Shading shader;
 	Audio audio;
 
+	Transform transform;
 	float counter;
 };
 

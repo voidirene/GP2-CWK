@@ -1,6 +1,6 @@
 #pragma once
-#include "Transform.h"
 #include <GL\glew.h>
+#include "Transform.h"
 #include <string>
 
 class Shading

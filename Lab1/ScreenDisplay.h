@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL\SDL.h>
 #include <GL\glew.h>
+#include <glfw3.h>
 #include <string>
 #include <iostream>
 using std::cout;
@@ -19,11 +20,12 @@ public:
 	float GetWidth();
 	float GetHeight();
 
+	GLFWwindow* window; //Variable that holds a pointer to our game window
+
 private:
 
 	void CheckForErrors(); //This function checks that all systems initialized in initializeDisplay() have initialized correctly
 
-	SDL_Window* window; //Variable that holds a pointer to our game window
 	SDL_GLContext sdlglContext; //Variable that holds the SDL GL Context
 	GLenum glew;
 

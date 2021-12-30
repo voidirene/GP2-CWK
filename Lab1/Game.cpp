@@ -1,19 +1,11 @@
 #include "Game.h"
-#include "Mesh.h"
-#include "Shading.h"
-#include "Texturing.h"
 
-unsigned int indices[] = { 0, 1, 2 };
-Transform transform;
-
-//for displaying triangles
-//Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0),glm::vec2(0.0, 0.0)), Vertex(glm::vec3(0, 0.5, 0),glm::vec2(0.5, 1.0)), Vertex(glm::vec3(0.5, -0.5, 0),glm::vec2(1.0, 0.0)) }; //making an array of vertices
-//Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0])); //make a mesh; size calculated by number of bytes of an array / no bytes of one element
+//unsigned int indices[] = { 0, 1, 2 };
 
 Game::Game()
 {
 	gameState = GameState::PLAYING; //set the game state to PLAYING
-	ScreenDisplay* gameDisplay = new ScreenDisplay(); //create a new display
+	gameDisplay = new ScreenDisplay(); //create a new display
 
 	counter = 0;
 }
@@ -41,7 +33,7 @@ void Game::Exit(std::string text)
 
 void Game::InitializeSystems()
 {
-	gameDisplay.InitializeDisplay(); //initializes the game display
+	gameDisplay->InitializeDisplay(); //initializes the game display
 
 	mesh1.LoadModel("..\\res\\monkey3.obj"); //loads a mesh from file
 	mesh2.LoadModel("..\\res\\teapot.obj");
@@ -52,7 +44,7 @@ void Game::InitializeSystems()
 	//texture.InitializeTexture("..\\res\\grass.jpg");
 	texture.InitializeAllTextures();
 
-	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay.GetWidth() / gameDisplay.GetHeight(), 0.01f, 1000.0f); //initializes the camera
+	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay->GetWidth() / gameDisplay->GetHeight(), 0.01f, 1000.0f); //initializes the camera
 
 	audio.AddNewSound("..\\res\\bang.wav");
 	audio.AddNewBackgroundMusic("..\\res\\background.wav");
@@ -127,6 +119,7 @@ void Game::ProcessUserInputs()
 		}
 	}
 
+	//for camera movement
 	if (cameraMoveUp)
 	{
 		camera.MoveCameraVertically(1);
@@ -143,12 +136,15 @@ void Game::ProcessUserInputs()
 	{
 		camera.MoveCameraHorizontally(-1);
 	}
+
+	//camera mouse input
+	camera.MouseControls(gameDisplay);
 }
 
 //TODO: should this be in the ScreenDisplay class instead? setting the transform and such shouldn't be in in UpdateDisplay
 void Game::UpdateDisplay()
 {
-	gameDisplay.ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
+	gameDisplay->ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
 	//MESH1
 	transform.SetPos(glm::vec3(-1.0, 0.0, 0.0));
@@ -192,7 +188,7 @@ void Game::UpdateDisplay()
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
 
-	gameDisplay.ChangeBuffer(); //swap the buffers
+	gameDisplay->ChangeBuffer(); //swap the buffers
 
 	/*ideally this should look like
 		clear display

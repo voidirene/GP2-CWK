@@ -10,7 +10,7 @@ Texturing::Texturing()
 
 Texturing::~Texturing()
 {
-	for (int i = 0; i < amountOfTextures; i++)
+	for (unsigned int i = 0; i < amountOfTextures; i++)
 	{
 		glDeleteTextures(1, &textureHandler[i]); //number of and address of textures
 	}

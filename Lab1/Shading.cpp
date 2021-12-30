@@ -21,10 +21,10 @@ void Shading::InitializeShader(const std::string& file)
 {
 	program = glCreateProgram(); //create the program
 
-	shaders[0] = CreateShader(LoadShader("..\\res\\shader.vert"), GL_VERTEX_SHADER); //create the shaders from file
-	shaders[1] = CreateShader(LoadShader("..\\res\\shader.frag"), GL_FRAGMENT_SHADER);
+	shaders[0] = CreateShader(LoadShader(file + ".vert"), GL_VERTEX_SHADER); //create the shaders from file
+	shaders[1] = CreateShader(LoadShader(file + ".frag"), GL_FRAGMENT_SHADER);
 
-	for (int i = 0; i < numberOfShaders; i++) //for loop for attaching shaders to the program
+	for (unsigned int i = 0; i < numberOfShaders; i++) //for loop for attaching shaders to the program
 	{
 		glAttachShader(program, shaders[i]);
 	}
