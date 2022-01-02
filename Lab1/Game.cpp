@@ -119,6 +119,7 @@ void Game::ProcessUserInputs()
 		}
 	}
 
+	//TODO: fix this, camera rotation blocks camera movement
 	//for camera movement
 	if (cameraMoveUp)
 	{
@@ -197,15 +198,14 @@ void Game::UpdateDisplay()
 		swap buffer*/
 }
 
-//TODO: rename
-bool Game::DetectCollision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad)
+bool Game::DetectCollision(glm::vec3 position1, float radius1, glm::vec3 position2, float radius2)
 {
-	float distance = glm::sqrt((m2Pos.x - m1Pos.x) * (m2Pos.x - m1Pos.x) + (m2Pos.y - m1Pos.y) * (m2Pos.y - m1Pos.y) + (m2Pos.z - m1Pos.z) * (m2Pos.z - m1Pos.z)); //pythagoras
+	float distance = glm::sqrt((position2.x - position1.x) * (position2.x - position1.x) + (position2.y - position1.y) * (position2.y - position1.y) + (position2.z - position1.z) * (position2.z - position1.z)); //pythagoras
 
-	if (distance < (m1Rad + m2Rad)) //TODO: check what happens if you remove the sqrt and multiply this distance by itself
+	if (distance < (radius1 + radius2))
 	{
 		cout << "collision! : " << distance << '\n';
-		audio.PlaySound(0);
+		audio.PlaySound(0); //plays a sound if sound isn't already playing
 		return true;
 	}
 	else

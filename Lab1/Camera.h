@@ -1,8 +1,6 @@
 #pragma once
 #include "ScreenDisplay.h"
 #include <glfw3.h>
-#include "glm/ext.hpp" //TODO: remove this
-#include <iostream> //TODO: remove this
 #include <glm/gtx/vector_angle.hpp>
 
 struct Camera
@@ -30,54 +28,50 @@ public:
 
 	void MouseControls(ScreenDisplay* display)
 	{
-		glfwSetInputMode(display->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		std::cout << glm::to_string(GetForward());
-		if (glfwGetMouseButton(display->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		if (glfwGetMouseButton(display->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) //if left mouse buttons is pressed, do camera rotation stuff
 		{
 			glfwSetInputMode(display->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); //hide cursor
 
-			// Prevents camera from jumping on the first click
-			if (firstClick)
+			//get the values for the screen's width and height, so the getters don't have to be called all the time
+			float screenWidth = display->GetWidth();
+			float screenHeight = display->GetHeight();
+
+			//this stops the camera from doing a small 'leap' when the left mouse button is pressed
+			if (firstPress)
 			{
-				glfwSetCursorPos(display->window, (display->GetWidth() / 2), (display->GetHeight() / 2));
-				firstClick = false;
+				glfwSetCursorPos(display->window, (screenWidth / 2), (screenHeight / 2));
+				firstPress = false;
 			}
 
-			// Stores the coordinates of the cursor
 			double x;
 			double y;
-			// Fetches the coordinates of the cursor
-			glfwGetCursorPos(display->window, &x, &y);
+			glfwGetCursorPos(display->window, &x, &y); //get the cursor's coordinates
 
-			// Normalizes and shifts the coordinates of the cursor such that they begin in the middle of the screen
-			// and then "transforms" them into degrees 
-			float rotX = 10 * (float)(y - (display->GetHeight() / 2)) / display->GetHeight();
-			float rotY = 10 * (float)(x - (display->GetWidth() / 2)) / display->GetWidth();
+			//moves the coordinates of the cursor such that they begin in the middle of the screen and then changes them into degrees
+			//the 90 is a value for sensitivity, a higher number means a faster camera
+			float xRotation = 90 * (float)(y - (screenHeight / 2)) / screenHeight;
+			float yRotation = 90 * (float)(x - (screenWidth / 2)) / screenWidth;
 
-			// Calculates upcoming vertical change in the Orientation
-			glm::vec3 forwardNew = glm::rotate(forwardVector, glm::radians(-rotX), glm::normalize(glm::cross(forwardVector, upVector)));
+			//rotate left and right
+			forwardVector = glm::rotate(forwardVector, glm::radians(-yRotation), upVector);
 
-			// Decides whether or not the next vertical Orientation is legal or not
+			//calculate the vertical change in the forward vector
+			glm::vec3 forwardNew = glm::rotate(forwardVector, glm::radians(-xRotation), glm::normalize(glm::cross(forwardVector, upVector)));
+
+			//check if the new forward vector is legal
 			if (abs(glm::angle(forwardNew, upVector) - glm::radians(90.0f)) <= glm::radians(85.0f))
 			{
 				forwardVector = forwardNew;
 			}
 
-			// Rotates the Orientation left and right
-			forwardVector = glm::rotate(forwardVector, glm::radians(-rotY), upVector);
-
-			// Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around
-			glfwSetCursorPos(display->window, (display->GetWidth() / 2), (display->GetHeight() / 2));
+			glfwSetCursorPos(display->window, (screenWidth / 2), (screenHeight / 2)); //set cursor in the middle of the screen
 		}
-		else if (glfwGetMouseButton(display->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
+		else if (glfwGetMouseButton(display->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) //if left mouse button is released, leave 'rotation mode'
 		{
-			// Unhides cursor since camera is not looking around anymore
-			glfwSetInputMode(display->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			// Makes sure the next time the camera looks around it doesn't jump
-			firstClick = true;
+			glfwSetInputMode(display->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //unhide cursor
+			firstPress = true; //set this to true again
 		}
 	}
-
 
 	void MoveCameraHorizontally(int direction)
 	{
@@ -92,7 +86,7 @@ public:
 	glm::vec3 GetPosition() { return cameraPosition; }
 	glm::vec3 GetForward() { return forwardVector; }
 	glm::vec3 GetUp() { return upVector; }
-	bool firstClick = true;
+	bool firstPress = true;
 
 private:
 

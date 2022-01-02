@@ -60,7 +60,6 @@ void Texturing::InitializeAllTextures() //TODO: fix InitializeTexture()
 	const std::string& file = "..\\res\\bricks.jpg";
 	unsigned char* textureData = stbi_load((file).c_str(), &width, &height, &numberOfComponents, 4); //4 is the required components (not important to us)
 
-	//TODO: move this to another function?
 	//check if it loaded
 	if (textureData == NULL)
 	{
@@ -87,7 +86,6 @@ void Texturing::InitializeAllTextures() //TODO: fix InitializeTexture()
 	const std::string& file2 = "..\\res\\water.jpg";
 	textureData = stbi_load((file2).c_str(), &width, &height, &numberOfComponents, 4); //4 is the required components (not important to us)
 
-	//TODO: move this to another function?
 	//check if it loaded
 	if (textureData == NULL)
 	{
@@ -114,7 +112,6 @@ void Texturing::InitializeAllTextures() //TODO: fix InitializeTexture()
 	const std::string& file3 = "..\\res\\grass.jpg";
 	textureData = stbi_load((file3).c_str(), &width, &height, &numberOfComponents, 4); //4 is the required components (not important to us)
 
-	//TODO: move this to another function?
 	//check if it loaded
 	if (textureData == NULL)
 	{

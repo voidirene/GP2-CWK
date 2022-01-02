@@ -55,8 +55,6 @@ class Mesh
 {
 public:
 
-	//TODO: look into unsigned ints //TODO: check if we still need the extra constructor
-	//Mesh(Vertex* vertex, unsigned int numberOfVertices);
 	Mesh();
 	~Mesh();
 
@@ -68,7 +66,7 @@ public:
 	unsigned int displayCount; //how many VAOs we want to display
 
 	//TODO: make a getter for the position + radius?
-	BoundingSphere boundingSphere; //TODO: add more colliders (ex. for the ears, chin, etc)
+	BoundingSphere boundingSphere;
 
 private:
 
