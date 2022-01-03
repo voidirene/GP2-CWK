@@ -30,7 +30,7 @@ private:
 	void GameLoop(); //This function runs the game loop; no game loop means the game ends
 	void UpdateDisplay(); //This function updates the game's display
 
-	bool DetectCollision(glm::vec3 m1Pos, float m1Rad, glm::vec3 m2Pos, float m2Rad);
+	bool DetectCollision(glm::vec3 position1, float radius1, glm::vec3 position2, float radius2);
 
 	GameState gameState; //Variable holding a reference to the current game state
 	ScreenDisplay* gameDisplay; //Variable holding a pointer to the game's screen display

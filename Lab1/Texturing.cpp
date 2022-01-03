@@ -29,7 +29,7 @@ void Texturing::InitializeTexture(const std::string& file)
 	//check if it loaded
 	if (textureData == NULL)
 	{
-		std::cerr << "Failed to load texture" << file << std::endl;
+		std::cerr << "Failed to load texture" << file << '\n';
 	}
 
 	//generate the buffer to store the texture in openGL

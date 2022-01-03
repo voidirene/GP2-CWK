@@ -21,8 +21,8 @@ void Shading::InitializeShader(const std::string& file)
 {
 	program = glCreateProgram(); //create the program
 
-	shaders[0] = CreateNewShader(LoadShader(file + ".vert"), GL_VERTEX_SHADER); //create the shaders from file
-	shaders[1] = CreateNewShader(LoadShader(file + ".frag"), GL_FRAGMENT_SHADER);
+	shaders[0] = CreateNewShader(LoadNewShader(file + ".vert"), GL_VERTEX_SHADER); //create the shaders from file
+	shaders[1] = CreateNewShader(LoadNewShader(file + ".frag"), GL_FRAGMENT_SHADER);
 
 	for (unsigned int i = 0; i < numberOfShaders; i++) //for loop for attaching shaders to the program
 	{
@@ -66,7 +66,7 @@ GLuint Shading::CreateNewShader(const std::string& file, unsigned int shaderType
 	return shader;
 }
 
-std::string Shading::LoadShader(const std::string& fileName)
+std::string Shading::LoadNewShader(const std::string& fileName)
 {
 	std::ifstream file;
 	file.open((fileName).c_str());

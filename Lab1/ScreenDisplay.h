@@ -26,7 +26,6 @@ private:
 
 	void CheckForErrors(); //This function checks that all systems initialized in initializeDisplay() have initialized correctly
 
-	SDL_GLContext sdlglContext; //Variable that holds the SDL GL Context
 	GLenum glew;
 
 	float displayWidth; //the game window's width

@@ -17,7 +17,7 @@ public:
 private:
 
 	GLuint CreateNewShader(const std::string& name, unsigned int type);
-	std::string LoadShader(const std::string& fileName);
+	std::string LoadNewShader(const std::string& fileName);
 	void CheckForErrors(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);
 
 	GLuint program; //holds the shader program
