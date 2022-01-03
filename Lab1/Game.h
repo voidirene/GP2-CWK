@@ -10,7 +10,7 @@
 #include <string>
 #include <iostream>
 
-using std::cout; //TODO: maybe remove Exit() as well as these?
+using std::cout;
 
 enum class GameState { PLAYING, QUITTING };
 
@@ -44,7 +44,6 @@ private:
 	Shading shader;
 	Audio audio;
 
-	Transform transform;
 	float counter;
 };
 

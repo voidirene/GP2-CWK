@@ -25,7 +25,6 @@ void Texturing::InitializeTexture(const std::string& file)
 	//load the image from file
 	unsigned char* textureData = stbi_load((file).c_str(), &width, &height, &numberOfComponents, 4); //4 is the required components (not important to us)
 
-	//TODO: move this to another function?
 	//check if it loaded
 	if (textureData == NULL)
 	{

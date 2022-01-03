@@ -21,13 +21,10 @@ void Game::StartGame()
 	GameLoop();
 }
 
-//TODO: check if this is okay to have in the game/is necessary
 void Game::Exit(std::string text)
 {
+	gameDisplay->~ScreenDisplay();
 	std::cout << text << '\n';
-	std::cout << "Press any  key to exit the app.";
-	int in;
-	std::cin >> in;
 	SDL_Quit();
 }
 
@@ -57,8 +54,11 @@ void Game::GameLoop()
 		ProcessUserInputs();
 		UpdateDisplay();
 
+		//TODO: detect more collisions?
 		DetectCollision(mesh1.boundingSphere.GetPosition(), mesh1.boundingSphere.GetRadius(), mesh2.boundingSphere.GetPosition(), mesh2.boundingSphere.GetRadius());
 	}
+
+	Exit("Escape key pressed, closing program...");
 }
 
 void Game::ProcessUserInputs()
@@ -102,57 +102,33 @@ void Game::ProcessUserInputs()
 	camera.MouseControls(gameDisplay);
 }
 
-//TODO: should this be in the ScreenDisplay class instead? setting the transform and such shouldn't be in in UpdateDisplay
 void Game::UpdateDisplay()
 {
 	gameDisplay->ClearDisplay(0.0f, 0.0f, 0.0f, 1.0f); //clear the display
 
-	//MESH1
-	transform.SetPos(glm::vec3(-1.0, 0.0, 0.0));
-	transform.SetRot(glm::vec3(counter * 1, 0.0, 0.0));
-	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
-
 	shader.UseShader();
-	shader.UpdateTransform(transform, camera);
-	texture.UseTexture(0);
 
-	mesh1.Display();
-	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
+	//MESH1
+	shader.UpdateTransform(mesh1.transform, camera);
+	texture.UseTexture(0);
+	mesh1.Display(-1.0, 0.0, 0.0, counter, 0.0, 0.0, 1.0, camera);
 
 	//MESH2
-	transform.SetPos(glm::vec3(0.0, sinf(counter) * 3, 0.0));
-	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
-	transform.SetScale(glm::vec3(0.1, 0.1, 0.1));
-
-	shader.UpdateTransform(transform, camera);
+	shader.UpdateTransform(mesh2.transform, camera);
 	texture.UseTexture(1);
-
-	mesh2.Display();
-	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
+	mesh2.Display(0.0, sinf(counter) * 3, 0.0, 0.0, 0.0, 0.0, 0.1, camera);
 
 	//MESH3
-	transform.SetPos(glm::vec3(3.0, 0.0, 0.0));
-	transform.SetRot(glm::vec3(0.0, counter * 1, 0.0));
-	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
-
-	shader.UpdateTransform(transform, camera);
+	shader.UpdateTransform(mesh3.transform, camera);
 	texture.UseTexture(2);
+	mesh3.Display(3.0, 0.0, 0.0, 0.0, counter, 0.0, 1.0, camera);
 
-	mesh3.Display();
-	mesh3.UpdateSphereData(*transform.GetPos(), 0.62f);
-
-	counter = counter + 0.01f;
+	counter += 0.01f;
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();
 
 	gameDisplay->ChangeBuffer(); //swap the buffers
-
-	/*ideally this should look like
-		clear display
-		draw object1
-		draw object2
-		swap buffer*/
 }
 
 bool Game::DetectCollision(glm::vec3 position1, float radius1, glm::vec3 position2, float radius2)

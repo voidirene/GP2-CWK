@@ -3,6 +3,9 @@
 #include <GL\glew.h>
 #include "obj_loader.h"
 #include <string>
+#include "Transform.h"
+#include "Texturing.h"
+#include "Shading.h"
 
 struct Vertex
 {
@@ -58,13 +61,15 @@ public:
 	Mesh();
 	~Mesh();
 
-	void Display();
+	void Display(float movementX, float movementY, float movementZ, float rotationX, float rotationY, float rotationZ, float scaleChange, Camera camera);
 	void LoadModel(const std::string& file); //for loading a model
 
+	void UpdateTransformValues(float movementX, float movementY, float movementZ, float rotationX, float rotationY, float rotationZ, float scaleChange);
 	void UpdateSphereData(glm::vec3 position, float radius);
 
 	unsigned int displayCount; //how many VAOs we want to display
 
+	Transform transform;
 	//TODO: make a getter for the position + radius?
 	BoundingSphere boundingSphere;
 
