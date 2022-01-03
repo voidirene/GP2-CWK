@@ -54,7 +54,6 @@ void Game::GameLoop()
 		ProcessUserInputs();
 		UpdateDisplay();
 
-		//TODO: detect more collisions?
 		DetectCollision(mesh1.boundingSphere.GetPosition(), mesh1.boundingSphere.GetRadius(), mesh2.boundingSphere.GetPosition(), mesh2.boundingSphere.GetRadius());
 	}
 

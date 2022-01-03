@@ -11,7 +11,6 @@ public:
 	{
 
 	}
-	//TODO: destructor?
 
 	void InitializeCamera(const glm::vec3& position, float fov, float aspectRatio, float nearClip, float farClip)
 	{

@@ -9,8 +9,7 @@ Audio::Audio()
 
 	Mix_OpenAudio(audioRate, audioFormat, audioChannels, audioBuffers);
 
-	//TODO: make this a function?
-	if (Mix_OpenAudio(audioRate, audioFormat, audioChannels, audioBuffers) != 0)
+	if (Mix_OpenAudio(audioRate, audioFormat, audioChannels, audioBuffers) != 0) //check for errors
 	{
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to initialize audio: %s", Mix_GetError());
 		exit(-1);

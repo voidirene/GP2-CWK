@@ -11,13 +11,12 @@ struct Vertex
 {
 public:
 
-	Vertex(const glm::vec3& pos, const glm::vec2& texCoord) //TODO: why does this not take normal as a parameter?
+	Vertex(const glm::vec3& pos, const glm::vec2& texCoord, const glm::vec3& normal)
 	{
 		this->position = pos;
 		this->texCoordinates = texCoord;
 		this->normal = normal;
 	}
-	//TODO: no destructor?
 
 	glm::vec3* GetPosition() { return &position; }
 	glm::vec2* GetTexCoordinates() { return &texCoordinates; }
@@ -29,7 +28,6 @@ private:
 	glm::vec3 normal;
 };
 
-//TODO: make a new script for this?
 struct BoundingSphere //for collision detection
 {
 public:
@@ -39,7 +37,7 @@ public:
 
 	}
 
-	void UpdateSphereData(glm::vec3 position, float radius) //TODO: overloads?
+	void UpdateSphereData(glm::vec3 position, float radius)
 	{
 		this->position = position;
 		this->radius = radius;
@@ -70,7 +68,6 @@ public:
 	unsigned int displayCount; //how many VAOs we want to display
 
 	Transform transform;
-	//TODO: make a getter for the position + radius?
 	BoundingSphere boundingSphere;
 
 private:
