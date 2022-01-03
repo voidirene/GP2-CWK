@@ -52,8 +52,6 @@ void ScreenDisplay::ClearDisplay(float r, float g, float b, float a)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clears color and depth buffer //set colour to colour defined in glClearColor
 }
 
-//TODO: check for errors in more parts of the program? not just in screenDisplay?
-//TODO: check for more errors here?
 void ScreenDisplay::CheckForErrors()
 {
 	if (window == nullptr)

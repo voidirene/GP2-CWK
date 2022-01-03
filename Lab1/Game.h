@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL\SDL.h>
 #include <GL\glew.h>
+#include <glfw3.h>
 #include "ScreenDisplay.h"
 #include "Audio.h"
 #include "Mesh.h"

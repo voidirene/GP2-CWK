@@ -24,7 +24,7 @@ void Game::StartGame()
 //TODO: check if this is okay to have in the game/is necessary
 void Game::Exit(std::string text)
 {
-	std::cout << text << std::endl;
+	std::cout << text << '\n';
 	std::cout << "Press any  key to exit the app.";
 	int in;
 	std::cin >> in;
@@ -64,78 +64,39 @@ void Game::GameLoop()
 
 void Game::ProcessUserInputs()
 {
-	SDL_Event event;
+	glfwPollEvents(); //poll events
 
-	bool cameraMoveUp = false;
-	bool cameraMoveDown = false;
-	bool cameraMoveLeft = false;
-	bool cameraMoveRight = false;
-
-	while (SDL_PollEvent(&event)) //get and process events
+	//for quitting the game
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		switch (event.type)
-		{
-			case SDL_QUIT: //quitting the game
-				gameState = GameState::QUITTING;
-				break;
-			case SDL_KEYDOWN: //keyboard button pressed
-			{
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_UP:
-					cameraMoveUp = true;
-					break;
-				case SDLK_DOWN:
-					cameraMoveDown = true;
-					break;
-				case SDLK_LEFT:
-					cameraMoveLeft = true;
-					break;
-				case SDLK_RIGHT:
-					cameraMoveRight = true;
-					break;
-				}
-				break;
-			}
-			case SDL_KEYUP: //keyboard button released
-			{
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_UP:
-					cameraMoveUp = false;
-					break;
-				case SDLK_DOWN:
-					cameraMoveDown = false;
-					break;
-				case SDLK_LEFT:
-					cameraMoveLeft = false;
-					break;
-				case SDLK_RIGHT:
-					cameraMoveRight = false;
-					break;
-				}
-				break;
-			}
-		}
+		gameState = GameState::QUITTING;
+		return;
 	}
 
-	//TODO: fix this, camera rotation blocks camera movement
-	//for camera movement
-	if (cameraMoveUp)
+	//for keyboard camera movement
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		camera.MoveCameraVertically(1);
 	}
-	if (cameraMoveDown)
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
 		camera.MoveCameraVertically(-1);
 	}
-	if (cameraMoveLeft)
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
 		camera.MoveCameraHorizontally(1);
 	}
-	if (cameraMoveRight)
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
 		camera.MoveCameraHorizontally(-1);
+	}
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_EQUAL) == GLFW_PRESS)
+	{
+		camera.ZoomCamera(1);
+	}
+	if (glfwGetKey(gameDisplay->window, GLFW_KEY_MINUS) == GLFW_PRESS)
+	{
+		camera.ZoomCamera(-1);
 	}
 
 	//camera mouse input

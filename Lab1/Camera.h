@@ -73,14 +73,20 @@ public:
 		}
 	}
 
+	//the 0.02 is a value for sensitivity, a higher number means a faster camera
 	void MoveCameraHorizontally(int direction)
 	{
-		cameraPosition.x += 1 * direction;
+		cameraPosition.x += 0.02 * direction;
 	}
 
 	void MoveCameraVertically(int direction)
 	{
-		cameraPosition.y += 1 * direction;
+		cameraPosition.y += 0.02 * direction;
+	}
+
+	void ZoomCamera(int direction)
+	{
+		cameraPosition.z += 0.02 * direction;
 	}
 
 	glm::vec3 GetPosition() { return cameraPosition; }
