@@ -39,10 +39,9 @@ void Game::InitializeSystems()
 	mesh2.LoadModel("..\\res\\teapot.obj");
 	mesh3.LoadModel("..\\res\\capsule.obj");
 	shader.InitializeShader("..\\res\\shader"); //create a new shader
-	//texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
-	//texture.InitializeTexture("..\\res\\water.jpg");
-	//texture.InitializeTexture("..\\res\\grass.jpg");
-	texture.InitializeAllTextures();
+	texture.InitializeTexture("..\\res\\bricks.jpg"); //load a texture
+	texture.InitializeTexture("..\\res\\water.jpg");
+	texture.InitializeTexture("..\\res\\grass.jpg");
 
 	camera.InitializeCamera(glm::vec3(0, 0, -5), 70.0f, (float) gameDisplay->GetWidth() / gameDisplay->GetHeight(), 0.01f, 1000.0f); //initializes the camera
 
@@ -115,8 +114,7 @@ void Game::UpdateDisplay()
 
 	shader.UseShader();
 	shader.UpdateTransform(transform, camera);
-	//texture.UseTexture(0);
-	texture.UseSpecificTexture(0);
+	texture.UseTexture(0);
 
 	mesh1.Display();
 	mesh1.UpdateSphereData(*transform.GetPos(), 0.62f);
@@ -127,8 +125,7 @@ void Game::UpdateDisplay()
 	transform.SetScale(glm::vec3(0.1, 0.1, 0.1));
 
 	shader.UpdateTransform(transform, camera);
-	//texture.UseTexture(1);
-	texture.UseSpecificTexture(1);
+	texture.UseTexture(1);
 
 	mesh2.Display();
 	mesh2.UpdateSphereData(*transform.GetPos(), 0.62f);
@@ -139,8 +136,7 @@ void Game::UpdateDisplay()
 	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 
 	shader.UpdateTransform(transform, camera);
-	//texture.UseTexture(2);
-	texture.UseSpecificTexture(2);
+	texture.UseTexture(2);
 
 	mesh3.Display();
 	mesh3.UpdateSphereData(*transform.GetPos(), 0.62f);
