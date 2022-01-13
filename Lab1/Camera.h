@@ -42,8 +42,7 @@ public:
 				firstPress = false;
 			}
 
-			double x;
-			double y;
+			double x, y;
 			glfwGetCursorPos(display->window, &x, &y); //get the cursor's coordinates
 
 			//moves the coordinates of the cursor such that they begin in the middle of the screen and then changes them into degrees
@@ -88,9 +87,6 @@ public:
 		cameraPosition.z += 0.02 * direction;
 	}
 
-	glm::vec3 GetPosition() { return cameraPosition; }
-	glm::vec3 GetForward() { return forwardVector; }
-	glm::vec3 GetUp() { return upVector; }
 	bool firstPress = true;
 
 private:

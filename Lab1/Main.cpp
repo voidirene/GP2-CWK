@@ -1,9 +1,7 @@
 #include "Game.h"
-#include <SDL\SDL.h>
-#undef main
 
 //The function that starts the entire program
-int main(int argc, char** argv) //arguments used to call SDL main
+int main(int argc, char** argv)
 {
 	Game game;
 	game.StartGame();
