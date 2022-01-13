@@ -115,7 +115,7 @@ void Game::UpdateDisplay()
 	//MESH2
 	shader.UpdateTransform(mesh2.transform, camera);
 	texture.UseTexture(1);
-	mesh2.Display(0.0, sinf(counter) * 3, 0.0, 0.0, 0.0, 0.0, 0.1, camera);
+	mesh2.Display(0.0, sinf(counter) * 5, 0.0, 0.0, 0.0, 0.0, 0.1, camera);
 
 	//MESH3
 	shader.UpdateTransform(mesh3.transform, camera);
